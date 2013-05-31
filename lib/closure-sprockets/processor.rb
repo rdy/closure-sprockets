@@ -2,7 +2,6 @@ class ClosureDependenciesProcessor < Tilt::Template
   def prepare; end
 
   def evaluate(context, locals, &block)
-    context.require_asset 'goog/base'
 
     data.lines.each do |line|
 
@@ -12,6 +11,7 @@ class ClosureDependenciesProcessor < Tilt::Template
         sub = mod if sub.nil?
 
         dep = [goog, mod, sub].compact.join("/").downcase
+        context.require_asset 'goog/base'
         context.require_asset(dep)
       end
     end
